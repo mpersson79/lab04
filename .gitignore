@@ -1,1 +1,7 @@
 complete/target
+
+# garmin-health-app
+garmin-health-app/backend/.env
+garmin-health-app/backend/__pycache__/
+garmin-health-app/backend/venv/
+*.pyc

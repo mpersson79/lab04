@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Garmin Health Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="vendor/chart.umd.js"></script>
+  <script src="vendor/chartjs-adapter-date-fns.bundle.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-mark">◎</span>
+        <div>
+          <h1>Garmin Health Dashboard</h1>
+          <p class="subtitle">Your daily vitals, at a glance</p>
+        </div>
+      </div>
+      <div class="header-controls">
+        <span id="status-pill" class="status-pill">checking…</span>
+        <input type="date" id="date-picker" />
+      </div>
+    </header>
+
+    <main>
+      <section class="stat-grid" id="stat-grid"></section>
+
+      <section class="chart-row">
+        <div class="card chart-card">
+          <h2>Heart Rate</h2>
+          <canvas id="hr-chart" height="220"></canvas>
+        </div>
+        <div class="card chart-card">
+          <h2>Body Battery</h2>
+          <canvas id="bb-chart" height="220"></canvas>
+        </div>
+      </section>
+
+      <section class="chart-row">
+        <div class="card chart-card">
+          <h2>Sleep Breakdown</h2>
+          <canvas id="sleep-chart" height="220"></canvas>
+        </div>
+        <div class="card activities-card">
+          <h2>Recent Activities</h2>
+          <ul id="activities-list" class="activities-list"></ul>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Unofficial data via Garmin Connect. Falls back to sample data when no account is linked.</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
