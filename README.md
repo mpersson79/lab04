@@ -1,3 +1,15 @@
+# Agent Studio
+
+This repository now also contains **[`agent-studio/`](agent-studio/)** — a visual
+builder for multi-agent Claude workflows: a drag-and-drop canvas of agents,
+retrieval, routers and human approval gates, wired to your Anthropic API key,
+knowledge sources and MCP servers. See [agent-studio/README.md](agent-studio/README.md)
+to run it.
+
+The rest of this file is the original OpenShift S2I lab.
+
+---
+
 ##  Performing an S2I (source to image) build within OpenShift
 
 Clone this git repo to your local disk and then use that to create a publicly visible git rep on github.com (the public one, not the IBM enterprise git repo).

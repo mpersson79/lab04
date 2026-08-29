@@ -1,0 +1,200 @@
+@import "tailwindcss";
+@import "@xyflow/react/dist/style.css";
+
+/*
+ * One dark palette, tuned for long sessions in front of a graph: a near-black
+ * ground, two surface steps for panels and cards, and a single amber accent so
+ * "this is running" reads instantly against everything else.
+ */
+@theme {
+  --color-ground: #0a0b0f;
+  --color-surface: #101218;
+  --color-raised: #171a22;
+  --color-hover: #1e222c;
+  --color-line: #262b36;
+  --color-line-soft: #1c202a;
+
+  --color-ink: #e8eaf0;
+  --color-ink-muted: #9aa3b5;
+  --color-ink-faint: #646d7f;
+
+  --color-accent: #f0a93b;
+  --color-accent-soft: #3a2a10;
+  --color-agent: #7c9cf5;
+  --color-knowledge: #4fbf8b;
+  --color-router: #c084f0;
+  --color-tool: #f08a5d;
+  --color-human: #f0d05d;
+  --color-danger: #f0616e;
+  --color-ok: #4fbf8b;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-ground);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #333a48;
+  background-clip: content-box;
+}
+
+/* --- React Flow overrides ------------------------------------------- */
+
+.react-flow {
+  --xy-background-color: var(--color-ground);
+  --xy-edge-stroke-default: #3a4152;
+  --xy-edge-stroke-selected-default: var(--color-accent);
+  --xy-connectionline-stroke-default: var(--color-accent);
+}
+
+.react-flow__attribution {
+  display: none;
+}
+
+.react-flow__handle {
+  width: 9px;
+  height: 9px;
+  background: var(--color-raised);
+  border: 1.5px solid #4a5265;
+  transition: background 120ms, border-color 120ms;
+}
+.react-flow__handle:hover,
+.react-flow__handle.connectingfrom {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.react-flow__edge-path {
+  stroke-width: 1.6;
+}
+.react-flow__edge.live .react-flow__edge-path {
+  stroke: var(--color-accent);
+  stroke-width: 2.2;
+}
+.react-flow__edge.dead .react-flow__edge-path {
+  stroke: #2a2f3a;
+  stroke-dasharray: 4 4;
+}
+.react-flow__edge-text {
+  fill: var(--color-ink-muted);
+  font-size: 10px;
+}
+.react-flow__edge-textbg {
+  fill: var(--color-surface);
+}
+
+.react-flow__controls-button {
+  background: var(--color-raised);
+  border-bottom: 1px solid var(--color-line);
+  fill: var(--color-ink-muted);
+}
+.react-flow__controls-button:hover {
+  background: var(--color-hover);
+}
+
+.react-flow__minimap {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+}
+
+/* --- Small shared utilities ------------------------------------------ */
+
+@utility panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+}
+
+@utility field {
+  width: 100%;
+  background: var(--color-ground);
+  border: 1px solid var(--color-line);
+  border-radius: 7px;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.8125rem;
+  color: var(--color-ink);
+  outline: none;
+  transition: border-color 120ms, box-shadow 120ms;
+}
+.field:focus {
+  border-color: #4a5265;
+  box-shadow: 0 0 0 3px rgb(240 169 59 / 0.1);
+}
+.field::placeholder {
+  color: var(--color-ink-faint);
+}
+.field:disabled {
+  opacity: 0.5;
+}
+
+@utility label-text {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  margin-bottom: 0.3rem;
+}
+
+/* Running nodes get a slow pulse rather than a spinner, so a canvas with
+   several live agents does not turn into a strobe. */
+@keyframes node-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(240 169 59 / 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 7px rgb(240 169 59 / 0);
+  }
+}
+.node-running {
+  animation: node-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes caret-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+.stream-caret::after {
+  content: "▍";
+  animation: caret-blink 1s step-end infinite;
+  color: var(--color-accent);
+}
