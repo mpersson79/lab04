@@ -1,32 +1,10 @@
-import type { z } from "zod";
-import { WorkflowEdgeSchema, WorkflowNodeSchema } from "./workflow.ts";
+import { edge, type WorkflowTemplate } from "./templateTypes.ts";
+import { MANAGED_SERVICE_TEMPLATES } from "./templatesManagedService.ts";
 
-/** Template nodes may omit anything with a schema default. */
-export type TemplateNode = z.input<typeof WorkflowNodeSchema>;
-export type TemplateEdge = z.input<typeof WorkflowEdgeSchema>;
+export type { TemplateNode, TemplateEdge, WorkflowTemplate } from "./templateTypes.ts";
 
-export interface WorkflowTemplate {
-  id: string;
-  name: string;
-  description: string;
-  tags: string[];
-  /** Emoji shown on the gallery card. */
-  icon: string;
-  /** Capabilities the template needs before it will do anything useful. */
-  requires: Array<"knowledge" | "mcp" | "web">;
-  nodes: TemplateNode[];
-  edges: TemplateEdge[];
-}
-
-const edge = (source: string, target: string, sourceHandle?: string, label = ""): TemplateEdge => ({
-  id: `e_${source}_${target}${sourceHandle ? `_${sourceHandle}` : ""}`,
-  source,
-  target,
-  sourceHandle: sourceHandle ?? null,
-  label,
-});
-
-export const TEMPLATES: WorkflowTemplate[] = [
+/** General-purpose starting points, independent of any particular process. */
+const GENERAL_TEMPLATES: WorkflowTemplate[] = [
   {
     id: "blank",
     name: "Blank canvas",
@@ -471,6 +449,11 @@ export const TEMPLATES: WorkflowTemplate[] = [
     ],
     edges: [edge("input", "answer"), edge("answer", "check"), edge("check", "output")],
   },
+];
+
+export const TEMPLATES: WorkflowTemplate[] = [
+  ...GENERAL_TEMPLATES,
+  ...MANAGED_SERVICE_TEMPLATES,
 ];
 
 export function findTemplate(id: string): WorkflowTemplate | undefined {

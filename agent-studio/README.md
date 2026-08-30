@@ -26,6 +26,16 @@ npm run dev                   # API on :4319, UI on :5319
 
 Open <http://localhost:5319>, pick a template, and press **Run**.
 
+To install the managed service lifecycle process — the knowledge bases, the
+service owner's tools and three workflows built around them:
+
+```bash
+npm run seed
+```
+
+See [seed/README.md](seed/README.md) for what that installs and how to replace
+the process documents with your own.
+
 For a single-process deployment:
 
 ```bash
@@ -58,10 +68,25 @@ and everything downstream of them is skipped rather than failed.
 
 ### Templates
 
-Six starting points ship with the studio: a blank canvas, a research brief with
-web search, support triage with retrieval and routing, a content pipeline with a
-human review gate, an MCP operator, and a grounded Q&A workflow with a
-groundedness checker.
+Six general starting points ship with the studio: a blank canvas, a research
+brief with web search, support triage with retrieval and routing, a content
+pipeline with a human review gate, an MCP operator, and a grounded Q&A workflow
+with a groundedness checker.
+
+Three more encode a managed service development and lifecycle process, installed
+together with the process documents they read by `npm run seed`:
+
+| Workflow | Shape |
+|---|---|
+| **Service lifecycle gate review** | A gate submission is routed to the assessor for its stage, checked against the published gate criteria, reviewed for risk and compliance, held for the service owner's decision, then written up as a gate decision record. |
+| **Service owner control desk** | The recurring service owner review, run as five specialists in parallel — reliability, change, cost and margin, risk, customer — consolidated by a chief of staff into a RAG status and a prioritised action list. |
+| **Service onboarding & readiness** | Readiness review, runbook gap analysis and the customer pack in parallel, consolidated into a dated plan working backwards from go-live, held for sign-off. |
+
+The process itself lives as Markdown under [`seed/knowledge/`](seed/knowledge/):
+the lifecycle stages and gate criteria, the service owner's accountabilities and
+full task cadence, the operations standards, and the commercial and compliance
+controls. Edit those files and re-run the seed and every agent is grounded in
+your process rather than the shipped default.
 
 ---
 

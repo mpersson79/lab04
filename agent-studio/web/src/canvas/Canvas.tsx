@@ -44,7 +44,7 @@ function CanvasInner({ showCosts }: { showCosts: boolean }) {
       if (Math.abs(width - lastWidth) < 24) return;
       lastWidth = width;
       clearTimeout(timer);
-      timer = setTimeout(() => void fitView({ padding: 0.25, maxZoom: 1, duration: 220 }), 90);
+      timer = setTimeout(() => void fitView({ padding: 0.12, maxZoom: 1, duration: 220 }), 90);
     });
     observer.observe(element);
     return () => {
@@ -168,7 +168,7 @@ function CanvasInner({ showCosts }: { showCosts: boolean }) {
           event.dataTransfer.dropEffect = "copy";
         }}
         fitView
-        fitViewOptions={{ padding: 0.25, maxZoom: 1 }}
+        fitViewOptions={{ padding: 0.12, maxZoom: 1 }}
         minZoom={0.2}
         maxZoom={1.6}
         proOptions={{ hideAttribution: true }}
